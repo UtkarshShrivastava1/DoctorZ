@@ -1,0 +1,30 @@
+# Ignore node_modules in sub-projects
+client/node_modules/
+server/node_modules/
+
+# Ignore build outputs (optional)
+client/dist/
+server/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor folders and config files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files (if used globally)
+.env
+.env.*
