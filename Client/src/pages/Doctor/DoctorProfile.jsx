@@ -10,7 +10,9 @@ function DoctorProfile() {
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/doctors/${id}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/doctors/${id}`
+        );
         const data = await res.json();
         console.log("Doctor data", data);
         setDoctor(data);
@@ -96,7 +98,6 @@ function DoctorProfile() {
           </div>
 
           {/* Website */}
-          <p className="text-xs sm:text-sm text-gray-500">Mediconnect.com</p>
         </div>
       </div>
     </div>
