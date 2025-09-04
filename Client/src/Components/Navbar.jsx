@@ -51,8 +51,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto py-4 px-4 flex items-center justify-between">
         {/* Logo */}
       <div className="text-2xl font-bold tracking-wide">
-  <span className="text-3xl text-white">M</span>edi
-  <span className="text-3xl text-white">A</span>id
+  <span className="text-3xl text-white">Doctor</span>
+  <span className="text-3xl text-white">Z</span>
 </div>
 
         {/* Desktop Navigation */}
