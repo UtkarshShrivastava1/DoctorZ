@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className=" w-full bg-[#0f172a] text-white py-10 border-t border-gray-700">
+    <footer className="w-full bg-[#0f172a] text-white py-10 border-t border-gray-700">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
         {/* Logo & About */}
         <div>
@@ -14,62 +17,102 @@ function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div>
+        <nav aria-label="Footer">
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-gray-400">
             <li>
-              <a href="/" className="hover:text-blue-500 transition">
+              <Link to="/" className="hover:text-blue-500 transition">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/userDashboard/about"
+              <Link
+                to="/userDashboard/about"
                 className="hover:text-blue-500 transition"
               >
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/doctors" className="hover:text-blue-500 transition">
+              <Link to="/doctor/all" className="hover:text-blue-500 transition">
                 Doctors
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/labs" className="hover:text-blue-500 transition">
+              <Link to="/labs" className="hover:text-blue-500 transition">
                 Labs
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" className="hover:text-blue-500 transition">
+              <Link to="/contact" className="hover:text-blue-500 transition">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
-        </div>
+        </nav>
 
         {/* Contact Info */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
           <p className="text-gray-400">📍 Bhilai, India</p>
-          <p className="text-gray-400">📞 +91 98765 43210</p>
-          <p className="text-gray-400">✉️ support@DoctorZ.com</p>
+          <p className="text-gray-400">
+            📞{" "}
+            <a
+              href="tel:+919876543210"
+              className="hover:text-blue-500 transition"
+            >
+              +91 98765 43210
+            </a>
+          </p>
+          <p className="text-gray-400">
+            ✉️{" "}
+            <a
+              href="mailto:support@doctorz.com"
+              className="hover:text-blue-500 transition"
+            >
+              support@doctorz.com
+            </a>
+          </p>
         </div>
 
         {/* Social Media */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-blue-500 transition">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="hover:text-blue-500 transition"
+            >
               <Facebook size={20} />
             </a>
-            <a href="#" className="hover:text-blue-500 transition">
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-blue-500 transition"
+            >
               <Twitter size={20} />
             </a>
-            <a href="#" className="hover:text-blue-500 transition">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-blue-500 transition"
+            >
               <Instagram size={20} />
             </a>
-            <a href="#" className="hover:text-blue-500 transition">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-blue-500 transition"
+            >
               <Linkedin size={20} />
             </a>
           </div>
@@ -78,7 +121,15 @@ function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-gray-700 mt-10 pt-4 text-center text-gray-500 text-sm">
-        © {new Date().getFullYear()} MediLab. All Rights Reserved.
+        © {year} • powered by{" "}
+        <a
+          href="https://www.zager.in"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-400 hover:text-blue-300 underline underline-offset-2"
+        >
+          Zager Digital Services
+        </a>
       </div>
     </footer>
   );
