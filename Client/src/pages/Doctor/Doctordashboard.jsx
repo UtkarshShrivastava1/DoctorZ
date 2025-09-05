@@ -1,8 +1,7 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import DoctorNavbar from "../../Components/DoctorNavbar";
 
 import doctorimg from "../../assets/doctorimg.jpg";
 
@@ -11,7 +10,7 @@ function Doctordashboard(){
     const [doctor,setDoctor] = useState({});
     const[isEditing,setIsEditing] = useState(false);
     const[formData,setFormData] = useState({});
-    const {id}= useParams();
+    // const {id}= useParams();
     const token = localStorage.getItem("doctorToken");
     console.log(token);
 
@@ -90,7 +89,7 @@ function Doctordashboard(){
     }
 
     return (
-        
+        <>
 
         <div className=" w-full min-h-screen flex  flex-col justify-center items-center p-6">
          
@@ -267,6 +266,7 @@ function Doctordashboard(){
         </div>
       </div>
     </div>
+    </>
     )
 }
 
