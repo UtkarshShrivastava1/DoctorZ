@@ -4,7 +4,7 @@ const DoctorNavbar = ({ onLogout }) => {
   return (
     <nav className="bg-blue-600 text-white flex justify-between items-center px-6 py-3">
       {/* Logo */}
-      <div className="text-xl font-bold">MediAid</div>
+      <div className="text-xl font-bold">DoctorZ</div>
 
       {/* Links */}
       <ul className="flex space-x-6">
