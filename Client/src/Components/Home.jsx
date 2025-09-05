@@ -1,5 +1,14 @@
 import React from "react";
-import { Ambulance, Stethoscope, Plus, ArrowRight, CheckCircle, Clock, Users, Shield } from "lucide-react";
+import { 
+  Ambulance,
+  Stethoscope,
+  Plus, 
+  ArrowRight, 
+  CheckCircle, 
+  Clock, 
+  Users, 
+  Shield 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
