@@ -134,7 +134,7 @@ const Home = () => {
             <div className="relative">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
                 <img
-                  src="/assets/banner.jpg" // from public/assets/banner.png
+                  src="/assets/banner.png" // from public/assets/banner.png
                   alt="Healthcare banner"
                   className="w-full h-full object-cover"
                   loading="eager"
