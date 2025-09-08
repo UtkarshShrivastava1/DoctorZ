@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 function DoctorRegister() {
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +29,7 @@ function DoctorRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -43,9 +45,11 @@ function DoctorRegister() {
         confirmButtonText: "Ok",
         customClass: "border-0",
       }).then(() => {
+        setLoading(false)
         navigate("/doctor/login");
       });
     } catch (error) {
+      setLoading(false)
       console.error(
         "Registration Error:",
         error.response?.data || error.message
@@ -193,7 +197,7 @@ function DoctorRegister() {
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition shadow-md"
           >
-            Register
+            {loading ? "Signing up..." : "Register"}
           </button>
         </form>
 

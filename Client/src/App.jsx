@@ -36,7 +36,7 @@ function AppWrapper() {
   // const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
 
-  const doctorRoutes = ["/doctor/dashboard", "/doctor/profile"];
+  const doctorRoutes = ["/doctor/dashboard", "/doctor/profile","/viewAppointment"];
 const labRoutes = ["/labsDashboard", "/labsDashboard/patients","/labsDashboard/labProfile"];
 const isDoctorRoute = doctorRoutes.includes(location.pathname);
 const isLabRoute = labRoutes.includes(location.pathname);
