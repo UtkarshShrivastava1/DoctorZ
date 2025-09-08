@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 
 function DoctorLogin(){
+    const [loading,setLoading] = useState(false);
 
     const navigate = useNavigate();
     const [formData,setFormData] = useState({
@@ -24,6 +25,7 @@ function DoctorLogin(){
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
+        setLoading(true);
         setError("");
 
         try{
@@ -39,9 +41,11 @@ function DoctorLogin(){
                   }).then(()=>{
                       window.location.href = "/doctor/dashboard";
                   })
+                  setLoading(false);
                 navigate('/doctor/dashboard');
         }
        catch (error) {
+        setLoading(false)
     console.error("❌ Login Error:", error);
 
     // agar server se response aaya hai (400, 401, etc.)
@@ -68,7 +72,7 @@ function DoctorLogin(){
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input type="email"  name="email" placeholder='Enter your email' className="w-full px-4 py-2 border rounded-lg" onChange={handleChange}/>
                     <input type="password"  name ="password" placeholder='Enter your password' className="w-full px-4 py-2 border rounded-lg" onChange={handleChange}/>
-                    <button type='submit' className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"> Login</button>
+                    <button type='submit' className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"> {loading ? "Logging in..." : "Login" }</button>
                 </form>
                 <p className="mt-4 text-center"> Don't have an account?{" "} <span className="text-blue-600 cursor-pointer" onClick={()=>navigate('/doctor/register')}>Register Here</span></p>
             </div>

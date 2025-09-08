@@ -5,8 +5,95 @@ import { Link } from "react-router-dom";
 
 import doctorimg from "../../assets/doctorimg.jpg";
 
-function Doctordashboard(){
+// Beautiful Loader Component
+const BeautifulLoader = () => {
+  return (
+    <div className="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center z-50">
+      <div className="text-center">
+        {/* Animated Medical Cross */}
+        <div className="relative mb-8">
+          <div className="w-20 h-20 mx-auto relative">
+            {/* Cross Animation */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full animate-pulse"></div>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-4 h-16 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full animate-pulse"></div>
+            </div>
+            
+            {/* Rotating Ring */}
+            <div className="absolute inset-0 border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
+            
+            {/* Outer Pulse Ring */}
+            <div className="absolute inset-0 border-2 border-blue-300 rounded-full animate-ping opacity-75"></div>
+          </div>
+        </div>
 
+        {/* Loading Text with Animation */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-700 animate-pulse">
+            Loading Doctor Profile
+          </h2>
+          
+          {/* Animated Dots */}
+          <div className="flex justify-center space-x-1">
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="w-64 bg-gray-200 rounded-full h-2 mx-auto overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-pulse"></div>
+          </div>
+          
+          <p className="text-gray-500 text-sm animate-fade-in">
+            Please wait while we fetch your information...
+          </p>
+        </div>
+      </div>
+      
+      {/* Background Animation */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-10 -left-10 w-20 h-20 bg-blue-200 rounded-full opacity-50 animate-float"></div>
+        <div className="absolute top-1/4 right-10 w-16 h-16 bg-indigo-200 rounded-full opacity-40 animate-float-delay"></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-blue-300 rounded-full opacity-30 animate-float"></div>
+      </div>
+      
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes float-delay {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(-180deg); }
+        }
+        
+        @keyframes fade-in {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-float-delay {
+          animation: float-delay 8s ease-in-out infinite;
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 2s ease-in-out infinite alternate;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+function Doctordashboard(){
+    const[loading,setLoading] = useState(false);
     const [doctor,setDoctor] = useState({});
     const[isEditing,setIsEditing] = useState(false);
     const[formData,setFormData] = useState({});
@@ -17,7 +104,8 @@ function Doctordashboard(){
 
     useEffect(()=>{
         const fetchDoctor = async()=>{
-            try{
+          try{
+              setLoading(true);
                 const token = localStorage.getItem("doctorToken");
                 console.log("Using token:", token);
               
@@ -28,9 +116,11 @@ function Doctordashboard(){
 
                 });
                 setDoctor(res.data);
+                setLoading(false)
                 console.log(res.data);
             }
             catch(error){
+              setLoading(false)
                 console.log("Error fetching doctor profile:",error);
             }
         };
@@ -90,185 +180,183 @@ function Doctordashboard(){
 
     return (
         <>
+        {loading ? (
+          <BeautifulLoader />
+        ) : (
+          <div className="w-full min-h-screen flex flex-col justify-center items-center p-6">
+            <div className="max-w-5xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+              {/* Left Section - Doctor Image */} 
+              <div className="bg-gray-50 flex flex-col justify-center items-center p-8">
+                <img
+                  src={doctorimg}
+                  alt="Doctor"
+                  className="w-60 h-60 object-cover rounded-xl shadow-md"
+                />
+                <h2 className="mt-4 text-xl font-semibold text-gray-700 uppercase">
+                  {doctor?.name || "Doctor"}
+                </h2>
+              </div>
 
-        <div className=" w-full min-h-screen flex  flex-col justify-center items-center p-6">
-         
-      <div className="max-w-5xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-        {/* Left Section - Doctor Image */} 
-        <div className="bg-gray-50 flex flex-col justify-center items-center p-8">
-          <img
-            src={doctorimg}
-            alt="Doctor"
-            className="w-60 h-60 object-cover rounded-xl shadow-md"
-          />
-          <h2 className="mt-4 text-xl font-semibold text-gray-700 uppercase">
-            {doctor?.name || "Doctor"}
-          </h2>
-        </div>
-
-        {/* Right Section - Info */}
-        <div className="relative bg-gray-900 text-white p-8">
-          {/* Fees Badge */}
-
-          {!isEditing && (
-            <span className="absolute top-4 right-4 bg-red-500 px-4 py-1 rounded-full font-semibold shadow-lg">
-              ₹{doctor?.fees || 500}
-            </span>
-          )}
-
-          {!isEditing ? (
-            <>
-              <h3 className="text-2xl font-bold mb-2"> {doctor?.name}</h3>
-              <p className="text-sm text-gray-300 mb-4">{doctor?.hospital}</p>
-
-              <h4 className="text-blue-400 font-semibold uppercase text-sm mb-2">
-                Speciality
-              </h4>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {doctor?.specialization?.split(",").map((spec, i) => (
-                  <span
-                    key={i}
-                    className="bg-gray-800 px-3 py-1 rounded-full text-sm"
-                  >
-                    {spec}
+              {/* Right Section - Info */}
+              <div className="relative bg-gray-900 text-white p-8">
+                {/* Fees Badge */}
+                {!isEditing && (
+                  <span className="absolute top-4 right-4 bg-red-500 px-4 py-1 rounded-full font-semibold shadow-lg">
+                    ₹{doctor?.fees || 500}
                   </span>
-                ))}
+                )}
+
+                {!isEditing ? (
+                  <>
+                    <h3 className="text-2xl font-bold mb-2"> {doctor?.name}</h3>
+                    <p className="text-sm text-gray-300 mb-4">{doctor?.hospital}</p>
+
+                    <h4 className="text-blue-400 font-semibold uppercase text-sm mb-2">
+                      Speciality
+                    </h4>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {doctor?.specialization?.split(",").map((spec, i) => (
+                        <span
+                          key={i}
+                          className="bg-gray-800 px-3 py-1 rounded-full text-sm"
+                        >
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="mb-2">
+                      <strong>Experience:</strong> {doctor?.experience || "10 Years"}
+                    </p>
+                    <p className="mb-2">
+                      <strong>Contact:</strong> {doctor?.mobile}
+                    </p>
+                    <p className="mb-2">
+                      <strong>Email:</strong> {doctor?.email}
+                    </p>
+                    <p className="mb-2">
+                      <strong>Location:</strong> {doctor?.location}
+                    </p>
+
+                    <p className="mb-2"><strong>Consultation fee:</strong> ₹{doctor?.fees}</p>
+                    <p className="mb-2">
+                      <strong>Time:</strong> {doctor?.startTime} - {doctor?.endTime}
+                    </p>
+
+                    {/* Buttons */}
+                    <div className="mt-6 flex gap-4">
+                      <button
+                        onClick={() =>{
+                          setFormData(doctor);
+                           setIsEditing(true)}}
+                        className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg"
+                      >
+                        Edit Profile
+                      </button>
+                      <Link
+                        to="/viewAppointment"
+                        className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg"
+                      >
+                        View Appointments
+                      </Link>
+
+                      <button onClick={handleDeleteProfile} className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg">
+                        Delete Profile
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <form
+                    onSubmit={handleUpdateProfile}
+                    className="grid grid-cols-1 gap-4 h-150"
+                  >
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name || ""}
+                      onChange={handleChange}
+                      placeholder="Name"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email || ""}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="text"
+                      name="specialization"
+                      value={formData.specialization || ""}
+                      onChange={handleChange}
+                      placeholder="Specialization "
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="text"
+                      name="experience"
+                      value={formData.experience || ""}
+                      onChange={handleChange}
+                      placeholder="Experience"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="text"
+                      name="mobile"
+                      value={formData.mobile || ""}
+                      onChange={handleChange}
+                      placeholder="Mobile"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="text"
+                      name="hospital"
+                      value={formData.hospital || ""}
+                      onChange={handleChange}
+                      placeholder="Hospital"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="text"
+                      name="location"
+                      value={formData.location || ""}
+                      onChange={handleChange}
+                      placeholder="Location"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <input
+                      type="number"
+                      name="fees"
+                      value={formData.fees || ""}
+                      onChange={handleChange}
+                      placeholder="Consultation Fee"
+                      className="w-full border rounded p-2 text-white"
+                    />
+                    <div className="flex gap-4">
+                      <button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsEditing(false)}
+                        className="bg-gray-500 hover:bg-gray-600 px-6 py-2 rounded-lg"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
               </div>
-
-              <p className="mb-2">
-                <strong>Experience:</strong> {doctor?.experience || "10 Years"}
-              </p>
-              <p className="mb-2">
-                <strong>Contact:</strong> {doctor?.mobile}
-              </p>
-              <p className="mb-2">
-                <strong>Email:</strong> {doctor?.email}
-              </p>
-              <p className="mb-2">
-                <strong>Location:</strong> {doctor?.location}
-
-              </p>
-
-              <p className="mb-2"><strong>Consultation fee:</strong> ₹{doctor?.fees}</p>
-              <p className="mb-2">
-                <strong>Time:</strong> {doctor?.startTime} - {doctor?.endTime}
-              </p>
-
-              {/* Buttons */}
-              <div className="mt-6 flex gap-4">
-                <button
-                  onClick={() =>{
-                    setFormData(doctor);
-                     setIsEditing(true)}}
-                  className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg"
-                >
-                  Edit Profile
-                </button>
-                <Link
-                  to="/viewAppointment"
-                  className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg"
-                >
-                  View Appointments
-                </Link>
-
-                <button onClick={handleDeleteProfile} className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg">
-                  Delete Profile
-
-                </button>
-              </div>
-            </>
-          ) : (
-            <form
-              onSubmit={handleUpdateProfile}
-              className="grid grid-cols-1 gap-4 h-150"
-            >
-              <input
-                type="text"
-                name="name"
-                value={formData.name || ""}
-                onChange={handleChange}
-                placeholder="Name"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email || ""}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="text"
-                name="specialization"
-                value={formData.specialization || ""}
-                onChange={handleChange}
-                placeholder="Specialization "
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="text"
-                name="experience"
-                value={formData.experience || ""}
-                onChange={handleChange}
-                placeholder="Experience"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="text"
-                name="mobile"
-                value={formData.mobile || ""}
-                onChange={handleChange}
-                placeholder="Mobile"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="text"
-                name="hospital"
-                value={formData.hospital || ""}
-                onChange={handleChange}
-                placeholder="Hospital"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="text"
-                name="location"
-                value={formData.location || ""}
-                onChange={handleChange}
-                placeholder="Location"
-                className="w-full border rounded p-2 text-white"
-              />
-              <input
-                type="number"
-                name="fees"
-                value={formData.fees || ""}
-                onChange={handleChange}
-                placeholder="Consultation Fee"
-                className="w-full border rounded p-2 text-white"
-              />
-              <div className="flex gap-4">
-                <button
-                  type="submit"
-                  className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(false)}
-                  className="bg-gray-500 hover:bg-gray-600 px-6 py-2 rounded-lg"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
-    </>
+            </div>
+          </div>
+        )}
+        </>
     )
 }
-
 
 export default Doctordashboard;

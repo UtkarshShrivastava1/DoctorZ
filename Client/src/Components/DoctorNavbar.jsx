@@ -9,12 +9,12 @@ const DoctorNavbar = ({ onLogout }) => {
       {/* Links */}
       <ul className="flex space-x-6">
         <li>
-          <Link to="/" className="hover:underline">
+          <Link to="/doctor/dashboard" className="hover:underline">
             Home
           </Link>
         </li>
         <li>
-          <Link to="/" className="hover:underline">
+          <Link to="/doctor/profile" className="hover:underline">
             Profile
           </Link>
         </li>
