@@ -24,7 +24,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/auth/user/${id}`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/user/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
