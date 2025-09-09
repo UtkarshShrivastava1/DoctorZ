@@ -8,22 +8,6 @@ function DoctorProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchDoctor = async () => {
-  //     try {
-  //       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/doctors/${id}`);
-  //       const data = await res.json();
-  //       console.log("Doctor data", data);
-  //       setDoctor(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error("Error fetching doctor:", error);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchDoctor();
-  // }, [id]);
-
   useEffect(()=>{
         const fetchDoctor = async()=>{
           try{
