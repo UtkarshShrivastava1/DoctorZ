@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import doctorimg from "../../assets/doctorimg.jpg";
 import axios from "axios";
+
 function DoctorProfile() {
   const [doctor, setDoctor] = useState({});
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-        const fetchDoctor = async()=>{
-          try{
-              setLoading(true);
-                const token = localStorage.getItem("doctorToken");
-                console.log("Using token:", token);
-              
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("doctorToken");
+        console.log("Using token:", token);
 
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/doctors/profile`,{
-                    headers:{
-                        Authorization:`Bearer ${token}`}
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/doctors/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-                });
-                setDoctor(res.data);
-                setLoading(false)
-                console.log(res.data);
-            }
-            catch(error){
-              setLoading(false)
-                console.log("Error fetching doctor profile:",error);
-            }
-        };
-        fetchDoctor();
-    },[]);
+        setDoctor(res.data);
+        setLoading(false);
+        console.log(res.data);
+      } catch (error) {
+        setLoading(false);
+        console.log("Error fetching doctor profile:", error);
+      }
+    };
+    fetchDoctor();
+  }, []);
 
   const handleClick = () => {
     if (!doctor || !doctor._id) {
@@ -104,9 +106,6 @@ function DoctorProfile() {
               Book Appointment
             </button>
           </div>
-
-          {/* Website */}
-          {/* <p className="text-xs sm:text-sm text-gray-500"></p> */}
         </div>
       </div>
     </div>
