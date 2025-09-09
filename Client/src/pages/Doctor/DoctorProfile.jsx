@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import doctorimg from "../../assets/doctorimg.jpg";
+import axios from "axios";
+
 function DoctorProfile() {
   const [doctor, setDoctor] = useState({});
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const res = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/doctors/${id}`
+        setLoading(true);
+        const token = localStorage.getItem("doctorToken");
+        console.log("Using token:", token);
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/doctors/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
-        const data = await res.json();
-        console.log("Doctor data", data);
-        setDoctor(data);
+
+        setDoctor(res.data);
         setLoading(false);
+        console.log(res.data);
       } catch (error) {
-        console.error("Error fetching doctor:", error);
         setLoading(false);
+        console.log("Error fetching doctor profile:", error);
       }
     };
     fetchDoctor();
-  }, [id]);
+  }, []);
 
   const handleClick = () => {
     if (!doctor || !doctor._id) {
@@ -96,8 +106,6 @@ function DoctorProfile() {
               Book Appointment
             </button>
           </div>
-
-          {/* Website */}
         </div>
       </div>
     </div>

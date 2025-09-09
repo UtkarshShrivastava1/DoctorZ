@@ -21,7 +21,7 @@ const DoctorNavbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/doctor/profile" className="hover:underline">
+          <Link to={`/doctor/profile`} className="hover:underline">
             Profile
           </Link>
         </li>
