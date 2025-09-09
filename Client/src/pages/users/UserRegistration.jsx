@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 function UserRegistration() {
+  const [loading,setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -16,6 +17,7 @@ function UserRegistration() {
 
   const handleRegistration = () => {
     console.log("clicked");
+    setLoading(true);
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,6 +32,7 @@ function UserRegistration() {
             icon: "success",
             confirmButtonText: "Ok"
           }).then(() => { 
+            setLoading(false)
             window.location.href = "/userLogin";
           });
       
@@ -40,7 +43,7 @@ function UserRegistration() {
             icon: "error",
             confirmButtonText: "Ok"
           });
-         
+          setLoading(false)
         }
       })
   }
@@ -96,7 +99,7 @@ function UserRegistration() {
             onClick={handleRegistration}
             className="mt-4 w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition duration-300"
           >
-            Sign Up
+            {loading? "Signing up..." : "Sign Up"}
           </button>
         </div>
         <p className="text-center text-gray-500 mt-4">
