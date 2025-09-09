@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const DoctorNavbar = ({ onLogout }) => {
+const DoctorNavbar = () => {
+  const navigate = useNavigate()
+  
+  const onLogout = ()=>{
+    localStorage.clear();
+    navigate("/");
+
+  }
   return (
     <nav className="bg-blue-600 text-white flex justify-between items-center px-6 py-3">
       {/* Logo */}
